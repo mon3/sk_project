@@ -6,7 +6,7 @@ import io
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect the socket to the port where the server is listening
-server_address = ('10.68.16.72', 8920)
+server_address = ('10.68.16.72', 8921)
 print ('connecting to %s port %s' % server_address)
 sock.connect(server_address)
 while True:
@@ -24,7 +24,8 @@ while True:
             print(len(message))
             amount_received += len(data)
             print ('received "%s"' % data)
-            message = input()
+            #message = input()
+            sock.flush()
     
     finally:
         if(input() == "zamknij"):

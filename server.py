@@ -3,8 +3,8 @@ import sys
 
 	# Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-HOST = '10.68.16.72'
-PORT = 8920
+HOST = '192.168.1.102 '
+PORT = 8921
 
 	# Bind the socket to the port
 server_address = (HOST, PORT)
