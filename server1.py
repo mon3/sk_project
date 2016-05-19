@@ -7,7 +7,7 @@ import numpy as np
 
 
 host ="192.168.1.102"
-port = 13040
+port = 13046
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,10 +24,11 @@ tab8letter = ['backpack', 'backpays', 'backrest', 'backroom', 'backseat']
 sock.listen(1)
 conn, addr = sock.accept()
 i = 0
-data = []
+#data = []
 poziom = 0
 letters_of_word = 0
 word_for_guess = 'initial'
+
 while True:
 	if (i == 0):
 		text1 = "Enter number of letters:"
@@ -57,7 +58,7 @@ while True:
 		i += 1
 		data = conn.recv(buf)
 		poziom = int(data)
-		print "typ poziomu: ", type(poziom)
+		#print "typ poziomu: ", type(poziom)
 		print "Received message: " + data
 
 	else:
@@ -73,7 +74,8 @@ while True:
 					choice1 = conn.recv(buf)
 					print "Received message: " + choice1
 					if ((choice1 in word_for_guess) == True):
-						text = "Good guess. Letter is on place:  " + str(word_for_guess.index(choice)+1)
+						print "type(letter): ", type(choice1)
+						text = "Good guess. Letter is on place:  " + str(word_for_guess.index(choice1)+1)
 						conn.sendall(text)					
 					else:
 						text = "Unfortunately, bad guess "
@@ -87,12 +89,12 @@ while True:
 					if (choice1 == word_for_guess ):
 						text = "Congratulations! You won! "
 						conn.sendall(text)
-						break
+						return 0
 					else:
 						text = "Unfortunately, bad guess "
 						conn.sendall(text)
 				else:
-					text = "You lost 1 your chance for no reason :( . Try once more! "
+					text = "You lost 1 your chance for no reason :( . Try once more! \n"
 					conn.sendall(text)
 					#choice = conn.recv(buf)
 
