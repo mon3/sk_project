@@ -1,7 +1,7 @@
 import os
 import socket
 host = "192.168.1.102" # set to IP address of target computer
-port = 13020
+port = 13025
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

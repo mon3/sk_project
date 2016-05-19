@@ -6,7 +6,7 @@ import socket
 
 
 host ="192.168.1.102"
-port = 13020
+port = 13025
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,14 +22,18 @@ while True:
 		text1 = "Podaj liczbe liter"
 		conn.sendall(text1)
 		i += 1
+		data = conn.recv(buf)
+		print "Received message: " + data
 	elif (i == 1):
 		text1 = "Wybierz poziom: A, B, C"
 		conn.sendall(text1)
 		i += 1
-	else:
-		
 		data = conn.recv(buf)
 		print "Received message: " + data
+	# else:
+		
+		# data = conn.recv(buf)
+		# print "Received message: " + data
 
 	if data == "exit":
 		break
