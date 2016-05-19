@@ -7,7 +7,7 @@ import numpy as np
 
 
 host ="192.168.1.102"
-port = 13046
+port = 13060
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,8 +28,12 @@ i = 0
 poziom = 0
 letters_of_word = 0
 word_for_guess = 'initial'
+condition = True
+condition1 = True
 
-while True:
+#while (condition == True):
+while (True):
+	print "ciagle dziala while: "
 	if (i == 0):
 		text1 = "Enter number of letters:"
 		conn.sendall(text1)
@@ -62,42 +66,47 @@ while True:
 		print "Received message: " + data
 
 	else:
-		if (poziom ==  1):
+		if (poziom ==  1) :
 			for i in range (10):
-				text = "Guess: letter (L) or word (W)? "
-				conn.sendall(text)
-				choice = conn.recv(buf)
-				print "Received message: " + data
-				if((choice == 'L') or (choice == 'l') ):
-					text = "Guess letter? "
+				if (condition1 == True):
+					if (i == 10):
+						condition = False
+					text = "Guess: letter (L) or word (W)? "
 					conn.sendall(text)
-					choice1 = conn.recv(buf)
-					print "Received message: " + choice1
-					if ((choice1 in word_for_guess) == True):
-						print "type(letter): ", type(choice1)
-						text = "Good guess. Letter is on place:  " + str(word_for_guess.index(choice1)+1)
-						conn.sendall(text)					
-					else:
-						text = "Unfortunately, bad guess "
+					choice = conn.recv(buf)
+					print "Received message: " + data
+					if(((choice == 'L') or (choice == 'l') )and (condition1 == True)):
+						text = "Guess letter? "
 						conn.sendall(text)
+						choice1 = conn.recv(buf)
+						print "Received message: " + choice1
+						if ((choice1 in word_for_guess) == True):
+							print "type(letter): ", type(choice1)
+							text = "Good guess. Letter is on place:  " + str(word_for_guess.index(choice1)+1)
+							conn.sendall(text)					
+						else:
+							text = "Unfortunately, bad guess "
+							conn.sendall(text)
 
-				elif ((choice == 'W') or (choice == 'w')):
-					text = "Guess word? "
-					conn.sendall(text)
-					choice1 = conn.recv(buf)
-					print "Received message: " + choice1
-					if (choice1 == word_for_guess ):
-						text = "Congratulations! You won! "
+					elif (((choice == 'W') or (choice == 'w')) and (condition1 == True)):
+						text = "Guess word? "
 						conn.sendall(text)
-						return 0
+						choice1 = conn.recv(buf)
+						print "Received message: " + choice1
+						if (choice1 == word_for_guess ):
+							text = "Congratulations! You won! "
+							conn.sendall(text)
+							condition = False
+							condition1 = False
+							
+						else:
+							text = "Unfortunately, bad guess "
+							conn.sendall(text)
 					else:
-						text = "Unfortunately, bad guess "
+						text = "You lost 1 your chance for no reason :( . Try once more! \n"
 						conn.sendall(text)
-				else:
-					text = "You lost 1 your chance for no reason :( . Try once more! \n"
-					conn.sendall(text)
-					#choice = conn.recv(buf)
-
+						#choice = conn.recv(buf)
+				
 	# else:
 		
 		# data = conn.recv(buf)
