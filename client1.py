@@ -1,13 +1,16 @@
 import os
 import socket
-host = "192.168.1.102" # set to IP address of target computer
-port = 13060
+host = "192.168.0.10" # set to IP address of target computer
+port = 13077
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 sock.connect(addr)
 
+print "WELCOME TO HANGMAN GAME by Monika and Karolina \n Read server's instructions carefully to avoid losing chances. \n Type 'exit' if you want to quit"
+print "You're able to choose difficulty level: 1 - easy (10 chances), 2 - medium (8 chances), 3 - (6 chances) and the length of the word from 3 to 8 letters. \n"
+print "Enjoy your game \n"
 i = 0 
 while True:
 	if (i == 0):

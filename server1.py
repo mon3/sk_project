@@ -6,8 +6,8 @@ import numpy as np
 
 
 
-host ="192.168.1.102"
-port = 13060
+host ="192.168.0.10"
+port = 13077
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -54,7 +54,8 @@ while (True):
 			word_for_guess = tab8letter[(int)(np.random.random()*(5))]
 
 		print "slowo: ", word_for_guess
-
+		zaszyfrowany_string = "#"*len(word_for_guess)
+		szyfr = list(zaszyfrowany_string)
 		print "Received message: " + data
 	elif (i == 1):
 		text1 = "Wybierz poziom: 1, 2, 3"
@@ -66,11 +67,93 @@ while (True):
 		print "Received message: " + data
 
 	else:
-		if (poziom ==  1) :
-			for i in range (10):
+		if (poziom ==  1) : #poziom 1
+			for i in range (8):
 				if (condition1 == True):
-					if (i == 10):
+					if (i == 8):
 						condition = False
+					word_length = len(word_for_guess)
+					text = "Recieved word:   " + "".join(szyfr) + "\n"
+					conn.sendall(text)
+					text = "Guess: letter (L) or word (W)? " + "\n"
+					conn.sendall(text)
+					choice = conn.recv(buf)
+					print "Received message: " + data
+					if(((choice == 'L') or (choice == 'l') )and (condition1 == True)):
+						text = "Guess letter? " + "\n"
+						conn.sendall(text)
+						choice1 = conn.recv(buf)
+						print "Received message: " + choice1
+						if ((choice1 in word_for_guess) == True):
+							print "type(letter): ", type(choice1)
+							text = "Good guess. Letter is on place:  " + str(word_for_guess.index(choice1)+1) + "\n"
+							conn.sendall(text)
+							szyfr[word_for_guess.index(choice1)] = 	choice1					
+							conn.sendall("".join(szyfr))
+							i += 1
+						else:
+							text = "Unfortunately, bad guess " + "\n"
+							conn.sendall(text)
+							i += 1
+
+						
+		if (poziom ==  2) : #poziom 2
+			for i in range (8):
+				if (condition1 == True):
+					if (i == 8):
+						condition = False
+					word_length = len(word_for_guess)
+					text = "Recieved word:   " + "".join(szyfr) + "\n"
+					conn.sendall(text)
+					text = "Guess: letter (L) or word (W)? " + "\n"
+					conn.sendall(text)
+					choice = conn.recv(buf)
+					print "Received message: " + data
+					if(((choice == 'L') or (choice == 'l') )and (condition1 == True)):
+						text = "Guess letter? " + "\n"
+						conn.sendall(text)
+						choice1 = conn.recv(buf)
+						print "Received message: " + choice1
+						if ((choice1 in word_for_guess) == True):
+							print "type(letter): ", type(choice1)
+							text = "Good guess. Letter is on place:  " + str(word_for_guess.index(choice1)+1) + "\n"
+							conn.sendall(text)
+							szyfr[word_for_guess.index(choice1)] = 	choice1					
+							conn.sendall("".join(szyfr))
+							i += 1
+						else:
+							text = "Unfortunately, bad guess " + "\n"
+							conn.sendall(text)
+							i += 1
+
+					elif (((choice == 'W') or (choice == 'w')) and (condition1 == True)):
+						text = "Guess word? " + "\n"
+						conn.sendall(text)
+						choice1 = conn.recv(buf)
+						print "Received message: " + choice1
+						if (choice1 == word_for_guess ):
+							text = "Congratulations! You won! " + "\n"
+							conn.sendall(text)
+							condition = False
+							condition1 = False
+							break
+							
+						else:
+							text = "Unfortunately, bad guess " + "\n"
+							conn.sendall(text)
+							i += 1
+					else:
+						text = "You lost 1 your chance for no reason :( . Try once more! \n"
+						conn.sendall(text)
+						i += 1
+		if (poziom ==  3) : #poziom 3
+			for i in range (6):
+				if (condition1 == True):
+					if (i == 6):
+						condition = False
+					word_length = len(word_for_guess)
+					text = "Recieved word:   " + "".join(szyfr)
+					conn.sendall(text)
 					text = "Guess: letter (L) or word (W)? "
 					conn.sendall(text)
 					choice = conn.recv(buf)
@@ -83,10 +166,14 @@ while (True):
 						if ((choice1 in word_for_guess) == True):
 							print "type(letter): ", type(choice1)
 							text = "Good guess. Letter is on place:  " + str(word_for_guess.index(choice1)+1)
-							conn.sendall(text)					
+							conn.sendall(text)
+							szyfr[word_for_guess.index(choice1)] = 	choice1					
+							conn.sendall("".join(szyfr))
+							i += 1
 						else:
 							text = "Unfortunately, bad guess "
 							conn.sendall(text)
+							i += 1
 
 					elif (((choice == 'W') or (choice == 'w')) and (condition1 == True)):
 						text = "Guess word? "
@@ -98,13 +185,16 @@ while (True):
 							conn.sendall(text)
 							condition = False
 							condition1 = False
+							break
 							
 						else:
 							text = "Unfortunately, bad guess "
 							conn.sendall(text)
+							i += 1
 					else:
 						text = "You lost 1 your chance for no reason :( . Try once more! \n"
 						conn.sendall(text)
+						i += 1
 						#choice = conn.recv(buf)
 				
 	# else:
