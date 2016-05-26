@@ -1,7 +1,7 @@
 import os
 import socket
 host = "192.168.1.97" # set to IP address of target computer
-port = 9011
+port = 9022
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -14,7 +14,9 @@ print "Enjoy your game \n"
 i = 0 
 trial = 10
 condition = True
-while (condition == True):
+condition1 = True
+licznik = 0
+while ((condition == True)and (condition1 == True)):
 	if (i == 0):
 		data1 = sock.recv(buf)
 		print data1
@@ -43,15 +45,26 @@ while (condition == True):
 		sock.sendto(data, addr)
 		print ("i= ",i)
 	else:
-		for j in range(trial):
-			print ("j = ",j)
-			print("poziom-1 = ", trial-1)
-			if(j == (trial-1)):
-				print "wszedlem do konca: "
-				break
+		
+		if (condition == True):
+			if (licznik == (trial-1)):
+				condition = False
+				condition1 = False
+
+		#for j in range(trial):	#print("poziom-1 = ", trial-1)
+			#if(j == (trial-1)):
+				#print "wszedlem do konca: "
+				#condition = False
+				#break
 			#data = raw_input("Enter message to send or type 'exit': ")
 			data1 = sock.recv(buf)
 			print data1
+			if("Guess letter?" in data1):
+				"wchodze do tej glupiej petli: "
+				licznik +=1
+
+			print ("licznik = ",licznik)
+		
 			# if (('bad' in data1) or ('good' in data1 ) or ('Good' in data1)):
 			# 	data = " "
 			# 	sock.sendto(data, addr)
@@ -62,7 +75,7 @@ while (condition == True):
 				data = raw_input()
 				sock.sendto(data, addr)
 				print "wysylam: ", data
-			j += 1
+			#j += 1
 		#sock.sendto(data, addr)
 	if data == "exit":
 		break

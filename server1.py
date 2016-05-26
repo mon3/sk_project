@@ -7,7 +7,7 @@ import numpy as np
 
 
 host ="192.168.1.97"
-port = 9011
+port = 9022
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -70,9 +70,9 @@ while ((condition == True)and (condition1 == True)):
 	else:
 		if ((poziom ==  1) and (condition1 == True)) : #poziom 1
 			print ("wchodze do poziom 1 gry!")
-			for i in range (6):
+			for j in range (6):
 				#if (condition1 == True):
-				if (i == 5):
+				if (j == 5):
 					# oznacza koniec gry
 					print ("wchodze do petli z condition!")
 					condition = False
@@ -105,8 +105,8 @@ while ((condition == True)and (condition1 == True)):
 						text = "Unfortunately, bad guess " + "\n"
 						conn.sendall(text)
 						#i += 1
-					i += 1
-					print ("i= ", i)
+					j += 1
+					print ("j= ", j)
 						
 		if (poziom ==  2) : #poziom 2
 			for i in range (8):
