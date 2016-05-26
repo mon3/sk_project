@@ -1,7 +1,7 @@
 import os
 import socket
 host = "192.168.1.97" # set to IP address of target computer
-port = 9022
+port = 9027
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -15,8 +15,9 @@ i = 0
 trial = 10
 condition = True
 condition1 = True
+condition2 = False
 licznik = 0
-while ((condition == True)and (condition1 == True)):
+while ((condition == True)and (condition1 == True) and (condition2 == False)):
 	if (i == 0):
 		data1 = sock.recv(buf)
 		print data1
@@ -50,6 +51,7 @@ while ((condition == True)and (condition1 == True)):
 			if (licznik == (trial-1)):
 				condition = False
 				condition1 = False
+				condition2 = True
 
 		#for j in range(trial):	#print("poziom-1 = ", trial-1)
 			#if(j == (trial-1)):
@@ -79,5 +81,14 @@ while ((condition == True)and (condition1 == True)):
 		#sock.sendto(data, addr)
 	if data == "exit":
 		break
+
+if (condition2 == True):
+	data1 = sock.recv(buf)
+	print data1
+	condition2 = False
+
+
+
+	
 sock.close()
 os._exit(0)

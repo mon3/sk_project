@@ -7,7 +7,7 @@ import numpy as np
 
 
 host ="192.168.1.97"
-port = 9022
+port = 9027
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
