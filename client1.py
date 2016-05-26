@@ -1,7 +1,7 @@
 import os
 import socket
 host = "192.168.1.97" # set to IP address of target computer
-port = 9038
+port = 9041
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,17 +23,17 @@ while ((condition == True)and (condition1 == True) and (condition2 == False)):
 		print data1
 		data = raw_input()
 		i += 1
-		print "wysylam: ", data
+		#print "wysylam: ", data
 		sock.sendto(data, addr)
 		poziom = int(data) 
 		poziom += 1
-		print ("i= ",i)
+		#print ("i= ",i)
 	elif (i == 1):
-		print ("ile razy tutaj? ")
+	#	print ("ile razy tutaj? ")
 		data1 = sock.recv(buf)
 		print data1
 		data = raw_input()
-		print "poziom: ", data
+		#print "poziom: ", data
 		poziom = int(data) 
 		if (poziom == 1):
 			trial = 10
@@ -44,7 +44,7 @@ while ((condition == True)and (condition1 == True) and (condition2 == False)):
 		poziom += 1
 		i += 1
 		sock.sendto(data, addr)
-		print ("i= ",i)
+		#print ("i= ",i)
 	else:
 		
 		if (condition == True):
@@ -75,7 +75,7 @@ while ((condition == True)and (condition1 == True) and (condition2 == False)):
 				"wchodze do tej glupiej petli: "
 				licznik +=1
 
-			print ("licznik = ",licznik)
+		#	print ("licznik = ",licznik)
 		
 			# if (('bad' in data1) or ('good' in data1 ) or ('Good' in data1)):
 			# 	data = " "
@@ -86,7 +86,7 @@ while ((condition == True)and (condition1 == True) and (condition2 == False)):
 
 				data = raw_input()
 				sock.sendto(data, addr)
-				print "wysylam: ", data
+			#	print "wysylam: ", data
 			#j += 1
 		#sock.sendto(data, addr)
 	if data == "exit":
