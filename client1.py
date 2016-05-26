@@ -1,7 +1,7 @@
 import os
 import socket
 host = "192.168.1.97" # set to IP address of target computer
-port = 9027
+port = 9033
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -36,7 +36,7 @@ while ((condition == True)and (condition1 == True) and (condition2 == False)):
 		print "poziom: ", data
 		poziom = int(data) 
 		if (poziom == 1):
-			trial = 6
+			trial = 10
 		elif (poziom == 2):
 			trial = 8
 		else:
@@ -59,8 +59,14 @@ while ((condition == True)and (condition1 == True) and (condition2 == False)):
 				#condition = False
 				#break
 			#data = raw_input("Enter message to send or type 'exit': ")
+
+
+
 			data1 = sock.recv(buf)
 			print data1
+
+
+
 			if("Guess letter?" in data1):
 				"wchodze do tej glupiej petli: "
 				licznik +=1
