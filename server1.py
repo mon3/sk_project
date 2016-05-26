@@ -7,7 +7,7 @@ import numpy as np
 
 
 host ="192.168.1.97"
-port = 9033
+port = 9038
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -93,18 +93,41 @@ while ((condition == True)and (condition1 == True)):
 					text = "Guess letter? " + "\n"
 					conn.sendall(text)
 					choice1 = conn.recv(buf)
-					print "Received message: " + choice1
+					print "Received letter: " + choice1
 					if ((choice1 in word_for_guess) == True):
-						print "type(letter): ", type(choice1)
 						text = "Good guess. Letter is on place:  " + str(word_for_guess.index(choice1)+1) + "\n"
 						conn.sendall(text)
-						szyfr[word_for_guess.index(choice1)] = 	choice1					
-						conn.sendall("".join(szyfr))
-						#i += 1
+						szyfr[word_for_guess.index(choice1)] = 	choice1
+						if '#' not in szyfr:
+							text = "Good guess. You won the game! " 
+							conn.sendall(text)
+							condition = False
+							condition1 = False
+							sock.close()
+							os._exit(0)
+					
+						conn.sendall("".join(szyfr)) #zamienia liste na stringa
+						
 					else:
 						text = "Unfortunately, bad guess " + "\n"
 						conn.sendall(text)
-						#i += 1
+						
+					j += 1
+					print ("j= ", j)
+				elif(((choice == 'W') or (choice == 'w') )and (condition1 == True)):
+					text = "Guess word? " + "\n"
+					conn.sendall(text)
+					choice1 = conn.recv(buf)
+					print "Received word: " + choice1
+					if ((choice1 == word_for_guess) ):
+						text = "Good guess. You won the game! " 
+						conn.sendall(text)
+						sock.close()
+						os._exit(0)
+					else:
+						text = "Unfortunately, bad guess " + "\n"
+						conn.sendall(text)
+				
 					j += 1
 					print ("j= ", j)
 						

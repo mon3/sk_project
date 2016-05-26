@@ -1,7 +1,7 @@
 import os
 import socket
 host = "192.168.1.97" # set to IP address of target computer
-port = 9033
+port = 9038
 buf = 1024
 addr = (host, port)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -65,9 +65,13 @@ while ((condition == True)and (condition1 == True) and (condition2 == False)):
 			data1 = sock.recv(buf)
 			print data1
 
+			if ("won" in data1):
+				condition = False
+				condition1 = False
+				condition2 = False
 
 
-			if("Guess letter?" in data1):
+			if(("Guess letter?" in data1) or ("Guess word?" in data1)):
 				"wchodze do tej glupiej petli: "
 				licznik +=1
 
